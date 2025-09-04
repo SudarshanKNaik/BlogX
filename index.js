@@ -1,41 +1,57 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const port = 8000;
+const port = 8001;
 const userRoute = require('./routes/user');
 const blogRoute = require('./routes/blog');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
-const {
-  checkForAuthenticationCookie,
-} = require('./mwares/authentication');
+const Blog = require('./models/blog');
+const { checkForAuthenticationCookie } = require('./mwares/authentication');
 
-// Set view engine
+// View engine
 app.set('view engine', 'ejs');
 app.set('views', path.resolve('./views'));
 
-// Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/BlogX', { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.error('MongoDB connection error:', err));
+// MongoDB connection
+mongoose.connect('mongodb://127.0.0.1:27017/BlogX')
+  .then(() => console.log('✅ Connected to MongoDB'))
+  .catch(err => console.error('❌ MongoDB connection error:', err));
 
 // Middleware
 app.use(express.urlencoded({ extended: false }));
-app.use(express.json());  // For JSON parsing
+app.use(express.json());
 app.use(cookieParser());
-app.use(checkForAuthenticationCookie('token')); // sets req.user and res.locals.user
+app.use(checkForAuthenticationCookie('token'));
 
-// Static files for uploaded files
+// Static
 app.use('/uploads', express.static(path.resolve('uploads')));
 
-// Routes
-app.get('/', (req, res) => {
-  console.log("REQ.USER:", req.user);
-  res.render('home'); // res.locals.user is available in EJS by default
+// Home route
+app.get('/', async (req, res) => {
+  try {
+    const blogs = await Blog.find({})
+      .populate('createdBy', 'fullName email')
+      .sort({ createdAt: -1 });
+
+    console.log("✅ Blogs fetched:", blogs.length);
+
+    res.render('home', { 
+      user: req.user,
+      blogs 
+    });
+  } catch (error) {
+    console.error('❌ Error fetching blogs:', error);
+    res.render('home', { 
+      user: req.user,
+      blogs: [] 
+    });
+  }
 });
 
+// Routes
 app.use('/user', userRoute);
 app.use('/blog', blogRoute);
 
 // Start server
-app.listen(port, () => console.log(`Server is running on port ${port}`));
+app.listen(port, () => console.log(`🚀 Server is running on http://localhost:${port}`));

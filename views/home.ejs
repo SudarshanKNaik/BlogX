@@ -1,12 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <%- include('./partials/head' ) %>
-    <title>Homepage</title>
+<%- include('./partials/head') %>
+<title>BlogX - Home</title>
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        text-align: center;
+        padding: 60px 0;
+        margin-bottom: 40px;
+    }
+    
+    .hero-section h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        font-weight: bold;
+    }
+    
+    .hero-section p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+    }
+    
+    .blog-card {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        margin-bottom: 2rem;
+        transition: transform 0.3s ease;
+    }
+    
+    .blog-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .blog-image {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+    }
+    
+    .blog-content {
+        padding: 1.5rem;
+    }
+    
+    .blog-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        color: #333;
+    }
+    
+    .blog-excerpt {
+        color: #666;
+        margin-bottom: 1rem;
+        line-height: 1.6;
+    }
+    
+    .blog-meta {
+        font-size: 0.9rem;
+        color: #888;
+        border-top: 1px solid #eee;
+        padding-top: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .no-blogs {
+        text-align: center;
+        padding: 4rem 0;
+        color: #666;
+    }
+    
+    .no-blogs h3 {
+        margin-bottom: 1rem;
+    }
+    
+    @media (max-width: 768px) {
+        .hero-section h1 {
+            font-size: 2rem;
+        }
+    }
+
+    /* === Custom Button CSS === */
+    .btn {
+        --button_radius: 0.70em;
+        --button_color: #e58080;
+        --button_outline_color: #000000;
+        font-size: 17px;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        border-radius: var(--button_radius);
+        background: var(--button_outline_color);
+        padding: 0;
+    }
+    .button_top {
+        display: block;
+        box-sizing: border-box;
+        border: 2px solid var(--button_outline_color);
+        border-radius: var(--button_radius);
+        padding: 0.5em 0.75em;
+        background: var(--button_color);
+        color: var(--button_outline_color);
+        transform: translateY(-0.2em);
+        transition: transform 0.1s ease;
+    }
+    .btn:hover .button_top {
+        transform: translateY(-0.33em);
+    }
+    .btn:active .button_top {
+        transform: translateY(0);
+    }
+</style>
 </head>
 <body>
-    <%- include('./partials/nav') %>
-<%= JSON.stringify(user) %>
+<%- include('./partials/nav') %>
+
+<% if (!locals.user) { %>
+<section class="hero-section">
+    <div class="container">
+        <h1>Welcome to BlogX</h1>
+        <p>Share your thoughts, stories, and ideas with the world</p>
+        <a href="/user/signup" class="btn"><span class="button_top">Join BlogX Today</span></a>
+    </div>
+</section>
+<% } %>
+
+<div class="container mt-4">
+    <% if (locals.user) { %>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Latest Blog Posts</h2>
+            <a href="/blog/add-new" class="btn">
+                <span class="button_top"><i class="bi bi-plus-circle"></i> Write New Blog</span>
+            </a>
+        </div>
+    <% } else { %>
+        <h2 class="text-center mb-4">Latest Blog Posts</h2>
+    <% } %>
+    
+    <% if (blogs && blogs.length > 0) { %>
+        <div class="row">
+            <% blogs.forEach(blog => { %>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="blog-card">
+                        <% if (blog.coverImageURL) { %>
+                            <img src="<%= blog.coverImageURL %>" alt="<%= blog.title %>" class="blog-image">
+                        <% } %>
+                        <div class="blog-content">
+                            <h3 class="blog-title"><%= blog.title %></h3>
+                            <p class="blog-excerpt">
+                                <%= blog.body.length > 150 ? blog.body.substring(0, 150) + '...' : blog.body %>
+                            </p>
+                            <div class="blog-meta">
+                                <div>
+                                    <strong>By:</strong> <%= blog.createdBy?.fullName || 'Anonymous' %>
+                                </div>
+                                <div>
+                                    <small><%= new Date(blog.createdAt).toLocaleDateString('en-US', { 
+                                        year: 'numeric', 
+                                        month: 'short', 
+                                        day: 'numeric' 
+                                    }) %></small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    <% } else { %>
+        <div class="no-blogs">
+            <h3>No blog posts yet!</h3>
+            <p>Be the first to share your thoughts with the world.</p>
+            <% if (locals.user) { %>
+                <a href="/blog/add-new" class="btn"><span class="button_top">Write First Blog</span></a>
+            <% } else { %>
+                <a href="/user/signup" class="btn"><span class="button_top">Sign Up to Write</span></a>
+            <% } %>
+        </div>
+    <% } %>
+</div>
+
 <%- include('./partials/scripts') %>
 </body>
 </html>
