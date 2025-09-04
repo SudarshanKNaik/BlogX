@@ -15,8 +15,8 @@ app.set('views', path.resolve('./views'));
 
 // MongoDB connection
 mongoose.connect('mongodb://127.0.0.1:27017/BlogX')
-  .then(() => console.log('✅ Connected to MongoDB'))
-  .catch(err => console.error('❌ MongoDB connection error:', err));
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(err => console.error(' MongoDB connection error:', err));
 
 // Middleware
 app.use(express.urlencoded({ extended: false }));
@@ -34,14 +34,14 @@ app.get('/', async (req, res) => {
       .populate('createdBy', 'fullName email')
       .sort({ createdAt: -1 });
 
-    console.log("✅ Blogs fetched:", blogs.length);
+    console.log(" Blogs fetched:", blogs.length);
 
     res.render('home', { 
       user: req.user,
       blogs 
     });
   } catch (error) {
-    console.error('❌ Error fetching blogs:', error);
+    console.error(' Error fetching blogs:', error);
     res.render('home', { 
       user: req.user,
       blogs: [] 
