@@ -3,25 +3,39 @@ const app = express();
 const path = require('path');
 const port = 8000;
 const userRoute = require('./routes/user');
+const blogRoute = require('./routes/blog');
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
+const {
+  checkForAuthenticationCookie,
+} = require('./mwares/authentication');
 
-app.set('view engine' , 'ejs'); // setting view engine to ejs
-app.set('views' , path.resolve('./views')); // setting views directory to views folder
+// Set view engine
+app.set('view engine', 'ejs');
+app.set('views', path.resolve('./views'));
 
+// Connect to MongoDB
+mongoose.connect('mongodb://localhost:27017/BlogX', { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(err => console.error('MongoDB connection error:', err));
 
-mongoose.connect('mongodb://localhost:27017/BlogX').then(() => console.log("Connected to MongoDB")) 
+// Middleware
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());  // For JSON parsing
+app.use(cookieParser());
+app.use(checkForAuthenticationCookie('token')); // sets req.user and res.locals.user
 
-app.use(express.urlencoded({ extended: false })); // handling form data 
+// Static files for uploaded files
+app.use('/uploads', express.static(path.resolve('uploads')));
 
+// Routes
+app.get('/', (req, res) => {
+  console.log("REQ.USER:", req.user);
+  res.render('home'); // res.locals.user is available in EJS by default
+});
 
-app.get('/' , (req, res) => {
-    res.render('home'); // rendering home.ejs file
-})
+app.use('/user', userRoute);
+app.use('/blog', blogRoute);
 
-
-app.use('/user' , userRoute); // using userRoute for /user path
-
-
-
-
-app.listen(port ,() => console.log(`server is running on port ${port}  `))
+// Start server
+app.listen(port, () => console.log(`Server is running on port ${port}`));
