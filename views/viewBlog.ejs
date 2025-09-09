@@ -2,83 +2,176 @@
 <html lang="en">
 <head>
 <%- include('./partials/head') %>
-<title><%= blog.title %> - BlogX</title>
+<title>All Blogs - BlogX</title>
 <style>
-    .blog-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 3rem 0;
-        margin-bottom: 2rem;
-    }
-    
-    .blog-cover {
-        width: 100%;
-        max-height: 400px;
-        object-fit: cover;
-        border-radius: 8px;
-        margin-bottom: 2rem;
-    }
-    
-    .blog-content {
-        font-size: 1.1rem;
-        line-height: 1.8;
-        color: #333;
-    }
-    
-    .blog-meta {
-        background: #f8f9fa;
-        padding: 1rem;
-        border-radius: 8px;
-        margin-bottom: 2rem;
-        border-left: 4px solid #007bff;
-    }
-    
-    .blog-body {
-        white-space: pre-wrap;
-        margin-bottom: 2rem;
-    }
+.blog-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 3rem 0;
+  margin-bottom: 2rem;
+}
+
+.blog-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+}
+
+.blog-card-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.blog-card-body {
+  padding: 1.5rem;
+}
+
+.blog-card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.blog-card-excerpt {
+  color: #666;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.blog-card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.blog-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.blog-card-footer .btn {
+  flex-shrink: 0;
+}
+
+.no-blogs {
+  text-align: center;
+  padding: 3rem 0;
+  color: #666;
+}
+
+.no-blogs i {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  color: #ddd;
+}
+
+@media (max-width: 768px) {
+  .blog-card-footer {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .blog-card-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}
 </style>
 </head>
 <body>
 <%- include('./partials/nav') %>
 
 <div class="blog-header">
-    <div class="container">
-        <h1 class="display-4"><%= blog.title %></h1>
-    </div>
+<div class="container">
+<div class="row align-items-center">
+<div class="col-md-8">
+<h1 class="display-4 mb-0">All Blogs</h1>
+<p class="lead mt-2">Discover amazing stories and insights</p>
+</div>
+<div class="col-md-4 text-md-end">
+<% if (user) { %>
+<a href="/blog/add-new" class="btn btn-light btn-lg">
+<i class="fas fa-plus"></i> Write New Blog
+</a>
+<% } %>
+</div>
+</div>
+</div>
 </div>
 
 <div class="container">
-    <div class="row">
-        <div class="col-lg-8 mx-auto">
-            <div class="blog-meta">
-                <div class="row">
-                    <div class="col-md-6">
-                        <strong>Author:</strong> <%= blog.createdBy?.fullName || 'Anonymous' %>
-                    </div>
-                    <div class="col-md-6 text-md-end">
-                        <strong>Published:</strong> <%= new Date(blog.createdAt).toLocaleDateString('en-US', { 
-                            year: 'numeric', 
-                            month: 'long', 
-                            day: 'numeric' 
-                        }) %>
-                    </div>
-                </div>
-            </div>
-            
-            <% if (blog.coverImageURL) { %>
-                <img src="<%= blog.coverImageURL %>" alt="<%= blog.title %>" class="blog-cover">
-            <% } %>
-            
-            <div class="blog-content">
-                <div class="blog-body"><%= blog.body %></div>
-            </div>
-            
-            <div class="text-center mt-4">
-                <a href="/" class="btn btn-outline-primary">← Back to All Blogs</a>
-            </div>
-        </div>
-    </div>
+<div class="row">
+<div class="col-12">
+<% if (blogs && blogs.length > 0) { %>
+<div class="row">
+<% blogs.forEach(blog => { %>
+<div class="col-lg-6 col-xl-4">
+<div class="blog-card">
+<% if (blog.coverImageURL) { %>
+<img src="<%= blog.coverImageURL %>" alt="<%= blog.title %>" class="blog-card-image">
+<% } %>
+<div class="blog-card-body">
+<h3 class="blog-card-title"><%= blog.title %></h3>
+<div class="blog-card-meta">
+<span>
+<i class="fas fa-user"></i> <%= blog.createdBy?.fullName || 'Anonymous' %>
+</span>
+<span>
+<i class="fas fa-calendar"></i> <%= new Date(blog.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %>
+</span>
+</div>
+<p class="blog-card-excerpt">
+<%= blog.body.length > 150 ? blog.body.substring(0, 150) + '...' : blog.body %>
+</p>
+<div class="blog-card-footer">
+<!-- Link to the individual blog page -->
+<a href="/blog/<%= blog._id %>" class="btn btn-outline-primary">
+<i class="fas fa-eye"></i> View Blog
+</a>
+<small class="text-muted">
+<%= Math.ceil(blog.body.split(' ').length / 200) %> min read
+</small>
+</div>
+</div>
+</div>
+</div>
+<% }) %>
+</div>
+<% } else { %>
+<div class="no-blogs">
+<i class="fas fa-blog"></i>
+<h3>No blogs found</h3>
+<p>Be the first to share your story!</p>
+<% if (user) { %>
+<a href="/blog/add-new" class="btn btn-primary btn-lg mt-3">
+<i class="fas fa-plus"></i> Write Your First Blog
+</a>
+<% } else { %>
+<a href="/user/signin" class="btn btn-primary btn-lg mt-3">
+<i class="fas fa-sign-in-alt"></i> Sign In to Write
+</a>
+<% } %>
+</div>
+<% } %>
+</div>
+</div>
 </div>
 
 <%- include('./partials/scripts') %>
