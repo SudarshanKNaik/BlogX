@@ -1,0 +1,18 @@
+make an account and sign in 
+see the region
+search amazon elastic beanstalk - does everything khudse
+create a server click 
+choose platform 
+then upload 
+delete node module and select all and compress into zip
+zip upload 
+
+cloud mongodb
+want shared cluster choose aws 
+
+db ko username and pass do 
+give ip 0.0.0.0 - eveyrhwhere - not a good thing 
+downlaod file 
+connect - URL 
+configuration - env vartiable - software config 
+name and value from files fetch 
