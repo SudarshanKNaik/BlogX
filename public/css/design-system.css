@@ -1,0 +1,229 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  BlogX Design System — Soft Pastel + Glassmorphism
+  - All color variables use HSL
+  - Light and dark themes via :root and .dark
+  - Includes gradients, glass effects, shadows, transitions
+  - Layers: base, components, utilities
+*/
+
+@layer base {
+  :root {
+    /* Core colors (HSL) */
+    --background: hsl(280 40% 98%);
+    --foreground: hsl(240 10% 15%);
+
+    --card: hsl(0 0% 100%);
+    --card-foreground: hsl(240 10% 15%);
+
+    --popover: hsl(0 0% 100%);
+    --popover-foreground: hsl(240 10% 15%);
+
+    /* Pastel palette */
+    --primary: hsl(270 60% 65%); /* lavender */
+    --primary-foreground: hsl(0 0% 100%);
+    --primary-glow: hsl(270 80% 75%);
+
+    --secondary: hsl(20 85% 75%); /* peach */
+    --secondary-foreground: hsl(240 10% 15%);
+
+    --accent: hsl(160 50% 80%); /* mint */
+    --accent-foreground: hsl(240 10% 15%);
+
+    --muted: hsl(280 30% 95%);
+    --muted-foreground: hsl(240 5% 50%);
+
+    --destructive: hsl(0 70% 60%);
+    --destructive-foreground: hsl(0 0% 100%);
+
+    /* UI tokens */
+    --border: hsl(280 20% 90%);
+    --input: hsl(280 20% 92%);
+    --ring: hsl(270 60% 65%);
+    --radius: 1rem;
+
+    /* Gradients (soft pastel) */
+    --gradient-hero: linear-gradient(135deg, hsl(270 60% 95%), hsl(20 80% 95%), hsl(160 50% 95%));
+    --gradient-primary: linear-gradient(135deg, hsl(270 60% 65%), hsl(270 80% 75%));
+    --gradient-accent: linear-gradient(135deg, hsl(20 85% 75%), hsl(30 85% 80%));
+
+    /* Glassmorphism */
+    --glass-bg: hsla(0 0% 100% / 0.72);
+    --glass-border: hsla(280 20% 90% / 0.28);
+
+    /* Shadows */
+    --shadow-soft: 0 12px 40px -12px hsla(270 60% 65% / 0.18);
+    --shadow-glow: 0 8px 28px -6px hsla(270 80% 75% / 0.12), 0 2px 8px -2px hsla(270 80% 75% / 0.06);
+
+    /* Transitions */
+    --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    /* Sidebar tokens */
+    --sidebar-background: hsl(0 0% 98%);
+    --sidebar-foreground: hsl(240 5.3% 26.1%);
+    --sidebar-primary: hsl(240 5.9% 10%);
+    --sidebar-primary-foreground: hsl(0 0% 98%);
+    --sidebar-accent: hsl(240 4.8% 95.9%);
+    --sidebar-accent-foreground: hsl(240 5.9% 10%);
+    --sidebar-border: hsl(220 13% 91%);
+    --sidebar-ring: hsl(217.2 91.2% 59.8%);
+
+    /* Typography */
+    --font-display: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    --font-body: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  }
+
+  /* Dark theme overrides */
+  .dark {
+    --background: hsl(240 15% 8%);
+    --foreground: hsl(280 30% 95%);
+
+    --card: hsl(240 12% 12%);
+    --card-foreground: hsl(280 30% 95%);
+
+    --popover: hsl(240 12% 12%);
+    --popover-foreground: hsl(280 30% 95%);
+
+    --primary: hsl(270 60% 70%);
+    --primary-foreground: hsl(240 15% 8%);
+    --primary-glow: hsl(270 80% 80%);
+
+    --secondary: hsl(20 75% 65%);
+    --secondary-foreground: hsl(240 15% 8%);
+
+    --accent: hsl(160 40% 60%);
+    --accent-foreground: hsl(280 30% 95%);
+
+    --muted: hsl(240 12% 15%);
+    --muted-foreground: hsl(240 5% 60%);
+
+    --destructive: hsl(0 70% 55%);
+    --destructive-foreground: hsl(280 30% 95%);
+
+    --border: hsl(240 12% 20%);
+    --input: hsl(240 12% 18%);
+    --ring: hsl(270 60% 70%);
+
+    --gradient-hero: linear-gradient(135deg, hsl(240 15% 10%), hsl(270 30% 15%), hsl(240 20% 12%));
+    --gradient-primary: linear-gradient(135deg, hsl(270 60% 70%), hsl(270 80% 80%));
+    --gradient-accent: linear-gradient(135deg, hsl(20 75% 65%), hsl(30 75% 70%));
+
+    --glass-bg: hsla(240 12% 12% / 0.54);
+    --glass-border: hsla(240 12% 20% / 0.28);
+
+    --shadow-soft: 0 12px 40px -12px hsla(270 60% 30% / 0.45);
+    --shadow-glow: 0 8px 28px -6px rgba(0,0,0,0.5);
+
+    --sidebar-background: hsl(240 5.9% 10%);
+    --sidebar-foreground: hsl(240 4.8% 95.9%);
+    --sidebar-primary: hsl(224.3 76.3% 48%);
+    --sidebar-primary-foreground: hsl(0 0% 100%);
+    --sidebar-accent: hsl(240 3.7% 15.9%);
+    --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
+    --sidebar-border: hsl(240 3.7% 15.9%);
+    --sidebar-ring: hsl(217.2 91.2% 59.8%);
+  }
+}
+
+@layer base {
+  /* Global border color helper */
+  * {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    height: 100%;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: color 0.25s var(--transition-smooth), background 0.25s var(--transition-smooth);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    color: var(--foreground);
+    margin-top: 0;
+  }
+
+  /* Utility token mappings to CSS custom properties for use in components */
+  .btn-primary {
+    background: var(--gradient-primary);
+    color: var(--primary-foreground);
+    border-radius: calc(var(--radius) - 0.125rem);
+    box-shadow: var(--shadow-glow);
+    transition: transform 0.18s var(--transition-smooth), box-shadow 0.18s var(--transition-smooth);
+  }
+
+  .card {
+    background: var(--card);
+    color: var(--card-foreground);
+    border-radius: calc(var(--radius) - 0.25rem);
+    box-shadow: var(--shadow-soft);
+    border: 1px solid var(--glass-border);
+  }
+}
+
+@layer utilities {
+  /* Glass effect */
+  .glass {
+    background: var(--glass-bg) !important;
+    backdrop-filter: blur(10px) saturate(120%);
+    -webkit-backdrop-filter: blur(10px) saturate(120%);
+    border: 1px solid var(--glass-border) !important;
+    box-shadow: var(--shadow-glow) !important;
+    border-radius: var(--radius) !important;
+  }
+
+  /* Gradient helpers */
+  .gradient-hero {
+    background: var(--gradient-hero) !important;
+  }
+
+  .gradient-primary {
+    background: var(--gradient-primary) !important;
+  }
+
+  .gradient-accent {
+    background: var(--gradient-accent) !important;
+  }
+
+  /* Text gradient (clip) */
+  .text-gradient {
+    background: var(--gradient-primary) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    color: transparent !important;
+  }
+
+  /* Rounded and token utilities */
+  .radius-lg { border-radius: var(--radius) !important; }
+  .shadow-soft { box-shadow: var(--shadow-soft) !important; }
+  .muted { color: var(--muted-foreground) !important; }
+  .muted-bg { background: var(--muted) !important; }
+
+  /* Smooth transition utilities */
+  .transition-smooth { transition: all 0.28s var(--transition-smooth) !important; }
+  .transition-bounce { transition: all 0.38s var(--transition-bounce) !important; }
+
+  /* Typography helpers */
+  .font-display { font-family: var(--font-display) !important; }
+  .font-body { font-family: var(--font-body) !important; }
+}
+
+/* Export a small, opinionated set of CSS custom properties for components to consume */
+:root {
+  --bs-border: var(--border);
+  --bs-input: var(--input);
+}
+
+/* End of design system */

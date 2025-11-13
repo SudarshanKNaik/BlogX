@@ -29,6 +29,9 @@ app.use(checkForAuthenticationCookie('token'));
 // Static
 app.use('/uploads', express.static(path.resolve('uploads')));
 
+// Serve public static assets (css, js, images)
+app.use(express.static(path.resolve('public')));
+
 // Home route
 app.get('/', async (req, res) => {
   try {

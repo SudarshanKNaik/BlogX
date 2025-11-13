@@ -3,128 +3,16 @@
 <head>
     <%- include('./partials/head') %>
     <title>Sign Up - BlogX</title>
-    <style>
-        body {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            min-height: 100vh;
-        }
-        
-        .auth-container {
-            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-            padding: 3rem;
-            margin: 2rem auto;
-            max-width: 450px;
-            border: 1px solid rgba(108, 117, 125, 0.1);
-        }
-        
-        .auth-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        
-        .auth-header h2 {
-            color: #2c3e50;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-        
-        .auth-header p {
-            color: #6c757d;
-            margin: 0;
-        }
-        
-        .form-control {
-            border: 2px solid #e9ecef;
-            border-radius: 10px;
-            padding: 1rem;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-        
-        .form-control:focus {
-            border-color: #6c757d;
-            box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.25);
-            outline: none;
-        }
-        
-        .btn {
-            --button_radius: 0.70em;
-            --button_color: #adb5bd;
-            --button_outline_color: #6c757d;
-            font-size: 17px;
-            font-weight: bold;
-            border: none;
-            cursor: pointer;
-            border-radius: var(--button_radius);
-            background: var(--button_outline_color);
-            padding: 0;
-            transition: all 0.3s ease;
-            width: 100%;
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-        
-        .btn .button_top {
-            display: block;
-            box-sizing: border-box;
-            border: 2px solid var(--button_outline_color);
-            border-radius: var(--button_radius);
-            padding: 0.7em 1.2em;
-            background: var(--button_color);
-            color: white;
-            transform: translateY(-0.2em);
-            transition: transform 0.1s ease;
-            text-decoration: none;
-            width: 100%;
-            text-align: center;
-        }
-        
-        .btn:hover .button_top {
-            transform: translateY(-0.33em);
-            background: #868e96;
-        }
-        
-        .btn:active .button_top {
-            transform: translateY(0);
-        }
-        
-        .auth-link {
-            text-align: center;
-            margin-top: 1.5rem;
-        }
-        
-        .auth-link a {
-            color: #6c757d;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        .auth-link a:hover {
-            text-decoration: underline;
-        }
-        
-        .password-strength {
-            margin-top: 0.5rem;
-            font-size: 0.9rem;
-        }
-        
-        .strength-weak { color: #dc3545; }
-        .strength-medium { color: #ffc107; }
-        .strength-strong { color: #28a745; }
-    </style>
+    <!-- design-system + Tailwind classes used; removed inline styles -->
 </head>
 <body>
     <%- include('./partials/nav') %>
     
     <div class="container">
-        <div class="auth-container">
+        <div class="card mx-auto mt-8 p-8 max-w-md">
             <div class="auth-header">
-                <h2><i class="fas fa-user-plus"></i> Join BlogX</h2>
-                <p>Create your account and start sharing your stories</p>
+                <h2 class="text-2xl font-display font-bold"><i class="fas fa-user-plus"></i> Join BlogX</h2>
+                <p class="text-muted">Create your account and start sharing your stories</p>
             </div>
             
             <% if (locals.error) { %>
@@ -134,57 +22,26 @@
                 </div>
             <% } %>
             
-            <form action="/user/signup" method="post" id="signupForm">
-                <div class="mb-3">
-                    <label for="fullName" class="form-label">
-                        <i class="fas fa-user"></i> Full Name
-                    </label>
-                    <input 
-                        type="text" 
-                        name="fullName" 
-                        class="form-control" 
-                        id="fullName" 
-                        placeholder="Enter your full name"
-                        required
-                        minlength="2"
-                    >
+            <form action="/user/signup" method="post" id="signupForm" class="space-y-4">
+                <div>
+                    <label for="fullName" class="form-label block mb-2"><i class="fas fa-user"></i> Full Name</label>
+                    <input type="text" name="fullName" id="fullName" required minlength="2" class="w-full p-3 border rounded-md" placeholder="Enter your full name">
                 </div>
-                
-                <div class="mb-3">
-                    <label for="email" class="form-label">
-                        <i class="fas fa-envelope"></i> Email Address
-                    </label>
-                    <input 
-                        type="email" 
-                        name="email" 
-                        class="form-control" 
-                        id="email" 
-                        placeholder="Enter your email address"
-                        required
-                    >
+
+                <div>
+                    <label for="email" class="form-label block mb-2"><i class="fas fa-envelope"></i> Email Address</label>
+                    <input type="email" name="email" id="email" required class="w-full p-3 border rounded-md" placeholder="Enter your email address">
                 </div>
-                
-                <div class="mb-4">
-                    <label for="password" class="form-label">
-                        <i class="fas fa-lock"></i> Password
-                    </label>
-                    <input 
-                        type="password" 
-                        name="password" 
-                        class="form-control" 
-                        id="password" 
-                        placeholder="Create a strong password"
-                        required
-                        minlength="6"
-                    >
-                    <div class="password-strength" id="passwordStrength"></div>
+
+                <div>
+                    <label for="password" class="form-label block mb-2"><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" name="password" id="password" required minlength="6" class="w-full p-3 border rounded-md" placeholder="Create a strong password">
+                    <div class="password-strength text-sm mt-2" id="passwordStrength"></div>
                 </div>
-                
-                <button type="submit" class="btn">
-                    <span class="button_top">
-                        <i class="fas fa-user-plus"></i> Create Account
-                    </span>
-                </button>
+
+                <div class="text-right">
+                    <button type="submit" class="btn-primary px-4 py-2"> <i class="fas fa-user-plus mr-2"></i> Create Account</button>
+                </div>
             </form>
             
             <div class="auth-link">
