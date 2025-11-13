@@ -3,16 +3,25 @@
 <head>
     <%- include('./partials/head') %>
     <title>Sign In - BlogX</title>
-    <!-- design-system + Tailwind classes used; removed inline styles -->
 </head>
 <body>
+    <div class="bg-animation">
+        <div class="bg-animation-overlay"></div>
+    </div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+
     <%- include('./partials/nav') %>
     
-    <div class="container">
-        <div class="card mx-auto mt-8 p-8 max-w-md">
+    <section class="page-section narrow">
+        <div class="container">
+        <div class="card mx-auto max-w-md">
             <div class="auth-header">
-                <h2 class="text-2xl font-display font-bold"><i class="fas fa-sign-in-alt"></i> Welcome Back</h2>
-                <p class="text-muted">Sign in to continue your journey</p>
+                <h2 class="text-2xl font-display font-bold"><i class="fas fa-sign-in-alt"></i> Sign In</h2>
+                <p class="text-muted">We're excited to see what you'll share next.</p>
             </div>
             
             <% if (locals.error) { %>
@@ -24,17 +33,17 @@
 
             <form action="/user/signin" method="post" class="space-y-4">
                 <div>
-                    <label for="email" class="form-label block mb-2"><i class="fas fa-envelope"></i> Email Address</label>
-                    <input type="email" name="email" id="email" required class="w-full p-3 border rounded-md" placeholder="Enter your email address">
+                    <label for="email" class="form-label"><i class="fas fa-envelope"></i> Email Address</label>
+                    <input type="email" name="email" id="email" required placeholder="Enter your email address">
                 </div>
 
                 <div>
-                    <label for="password" class="form-label block mb-2"><i class="fas fa-lock"></i> Password</label>
-                    <input type="password" name="password" id="password" required class="w-full p-3 border rounded-md" placeholder="Enter your password">
+                    <label for="password" class="form-label"><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" name="password" id="password" required placeholder="Enter your password">
                 </div>
 
                 <div class="text-right">
-                    <button type="submit" class="btn-primary px-4 py-2"> <i class="fas fa-sign-in-alt mr-2"></i> Sign In</button>
+                    <button type="submit" class="btn btn-primary"> <i class="fas fa-sign-in-alt mr-2"></i> Sign In</button>
                 </div>
             </form>
             
@@ -42,7 +51,8 @@
                 <p>Don't have an account? <a href="/user/signup">Sign up here</a></p>
             </div>
         </div>
-    </div>
+        </div>
+    </section>
 
     <%- include('./partials/scripts') %>
 </body>

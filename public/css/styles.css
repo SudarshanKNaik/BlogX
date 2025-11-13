@@ -617,6 +617,103 @@ textarea:focus {
   text-decoration: underline;
 }
 
+/* Legacy utility support */
+.page-section {
+  position: relative;
+  z-index: 10;
+  padding: 4rem 1.5rem 4rem;
+}
+
+.page-section.narrow {
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
+}
+
+.page-section .container {
+  margin: 0 auto;
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+
+.auth-header h2 {
+  margin-bottom: 0.35rem;
+}
+
+.auth-header p {
+  margin: 0;
+}
+
+.mx-auto { margin-left: auto; margin-right: auto; }
+.mt-3 { margin-top: 0.75rem; }
+.mt-4 { margin-top: 1rem; }
+.mt-6 { margin-top: 1.5rem; }
+.mt-8 { margin-top: 2rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.px-4 { padding-left: 1.25rem; padding-right: 1.25rem; }
+.px-6 { padding-left: 1.75rem; padding-right: 1.75rem; }
+.py-2 { padding-top: 0.6rem; padding-bottom: 0.6rem; }
+.py-3 { padding-top: 0.85rem; padding-bottom: 0.85rem; }
+.p-6 { padding: 1.75rem; }
+.p-8 { padding: 2.2rem; }
+.inline-block { display: inline-block; }
+.radius-lg { border-radius: 18px; }
+.w-100,
+.w-full { width: 100%; }
+.text-white { color: #ffffff; }
+.text-lg { font-size: 1.25rem; }
+.text-2xl { font-size: 1.75rem; }
+.text-3xl { font-size: 2rem; }
+.text-5xl { font-size: 3.5rem; }
+.font-display { font-family: "Inter", sans-serif; font-weight: 800; }
+.opacity-95 { opacity: 0.95; }
+.mr-2 { margin-right: 0.5rem; }
+.glass {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
+  backdrop-filter: blur(16px);
+}
+.image-preview {
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+}
+.file-upload-area {
+  padding: 2rem;
+  border: 1px dashed rgba(255, 255, 255, 0.18);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.file-upload-area:hover {
+  border-color: rgba(255, 215, 0, 0.6);
+  transform: translateY(-2px);
+}
+.space-y-4 > * + * {
+  margin-top: 1.25rem;
+}
+.max-w-md {
+  width: min(420px, 100%);
+}
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+.form-actions .btn {
+  min-width: 160px;
+}
+.flex { display: flex; }
+.gap-4 { gap: 1rem; }
+.justify-end { justify-content: flex-end; }
+.text-right { text-align: right; }
+.text-sm { font-size: 0.9rem; }
+.cursor-pointer { cursor: pointer; }
+.d-none { display: none !important; }
+
 /* Responsive */
 @media (max-width: 992px) {
   .nav-links {

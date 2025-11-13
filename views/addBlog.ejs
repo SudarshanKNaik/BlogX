@@ -3,22 +3,22 @@
 <head>
 <%- include('./partials/head') %>
 <title>Write New Blog - BlogX</title>
-<!-- design-system + Tailwind classes used; removed inline styles -->
 </head>
 <body>
+<div class="bg-animation">
+  <div class="bg-animation-overlay"></div>
+</div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+
 <%- include('./partials/nav') %>
 
-<!-- Page Header -->
-<div class="gradient-primary text-white py-12">
-  <div class="container mx-auto px-4">
-    <h1 class="text-3xl font-display font-bold"><i class="fas fa-pen-fancy"></i> Write New Blog</h1>
-    <p class="opacity-90">Share your thoughts, stories, and ideas with the world</p>
-  </div>
-</div>
-
-<div class="container mx-auto px-4 py-8">
-  <div class="card p-8">
-    <!-- Error Display -->
+<section class="page-section">
+  <div class="container">
+  <div class="card">
     <% if (locals.error) { %>
       <div class="alert alert-danger" role="alert">
         <i class="fas fa-exclamation-triangle"></i>
@@ -26,14 +26,12 @@
       </div>
     <% } %>
 
-  <!-- Blog Form -->
-  <form action="/blog" method="post" enctype="multipart/form-data" id="blogForm">
-      <!-- Cover Image Upload -->
-      <div class="mb-4">
-        <label for="coverImage" class="form-label block mb-2">
+    <form action="/blog" method="post" enctype="multipart/form-data" id="blogForm" class="space-y-4">
+      <div>
+        <label for="coverImage" class="form-label">
           <i class="fas fa-image"></i> Cover Image (Optional)
         </label>
-        <div class="file-upload-area glass p-6 rounded-md cursor-pointer text-center" onclick="document.getElementById('coverImage').click()">
+        <div class="file-upload-area glass text-center cursor-pointer" onclick="document.getElementById('coverImage').click()">
           <i class="fas fa-cloud-upload-alt text-2xl"></i>
           <div class="file-upload-text mt-2">
             <strong>Click to upload</strong> or drag and drop<br>
@@ -44,8 +42,7 @@
         <img id="imagePreview" class="image-preview d-none mt-4" alt="Preview">
       </div>
 
-      <!-- Blog Title -->
-      <div class="mb-4">
+      <div>
         <label for="title" class="form-label">
           <i class="fas fa-heading"></i> Blog Title
         </label>
@@ -61,8 +58,7 @@
         <small class="text-muted">Maximum 200 characters</small>
       </div>
 
-      <!-- Blog Content -->
-      <div class="mb-4">
+      <div>
         <label for="body" class="form-label">
           <i class="fas fa-align-left"></i> Blog Content
         </label>
@@ -77,14 +73,14 @@
         <small class="text-muted">Minimum 50 characters</small>
       </div>
 
-      <!-- Form Actions -->
       <div class="form-actions flex gap-4 justify-end mt-6">
-        <a href="/" class="btn-secondary inline-block px-4 py-2 radius-lg"> <i class="fas fa-times mr-2"></i> Cancel</a>
-        <button class="btn-primary inline-block px-6 py-2 radius-lg" type="submit" id="submitBtn"> <i class="fas fa-paper-plane mr-2"></i> Publish Blog</button>
+        <a href="/" class="btn btn-ghost"><i class="fas fa-times mr-2"></i> Cancel</a>
+        <button class="btn btn-primary" type="submit" id="submitBtn"> <i class="fas fa-paper-plane mr-2"></i> Publish Blog</button>
       </div>
     </form>
   </div>
-</div>
+  </div>
+</section>
 
 <%- include('./partials/scripts') %>
 
@@ -149,9 +145,9 @@ document.getElementById('body').addEventListener('input', function() {
   const currentLength = this.value.length;
   
   if (currentLength < minLength) {
-    this.style.borderColor = '#dc3545';
+    this.style.borderColor = 'rgba(220, 38, 38, 0.75)';
   } else {
-    this.style.borderColor = '#e9ecef';
+    this.style.borderColor = 'rgba(255, 255, 255, 0.15)';
   }
 });
 </script>
